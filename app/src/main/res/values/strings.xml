@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">QR Contact Share</string>
+    <string name="contentDescription">The contact QR</string>
+</resources>
