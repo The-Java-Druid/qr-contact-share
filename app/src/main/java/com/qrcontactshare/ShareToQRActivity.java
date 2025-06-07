@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -23,7 +25,9 @@ import static java.util.stream.Collectors.joining;
 
 public class ShareToQRActivity extends AppCompatActivity {
 
+    private static final float DEFAULT_BRIGHTNESS = -1f;
     private ImageView qrImageView;
+    private float originalBrightness = DEFAULT_BRIGHTNESS;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +48,18 @@ public class ShareToQRActivity extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        increaseScreenBrightness();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        restoreScreenBrightness();
     }
 
     private static String readStreamToString(InputStream is) throws IOException {
@@ -71,5 +87,22 @@ public class ShareToQRActivity extends AppCompatActivity {
             for (int y = 0; y < height; y++)
                 bmp.setPixel(x, y, matrix.get(x, y) ? 0xFF000000 : 0xFFFFFFFF);
         return bmp;
+    }
+
+    private void increaseScreenBrightness() {
+        final Window window = getWindow();
+        final WindowManager.LayoutParams layoutParams = window.getAttributes();
+        originalBrightness = layoutParams.screenBrightness;
+        layoutParams.screenBrightness = 1f;
+        window.setAttributes(layoutParams);
+    }
+
+    private void restoreScreenBrightness() {
+        if (originalBrightness != DEFAULT_BRIGHTNESS) {
+            final Window window = getWindow();
+            final WindowManager.LayoutParams layoutParams = window.getAttributes();
+            layoutParams.screenBrightness = originalBrightness;
+            window.setAttributes(layoutParams);
+        }
     }
 }
