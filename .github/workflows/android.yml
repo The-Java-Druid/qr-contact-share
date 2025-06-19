@@ -21,10 +21,11 @@ jobs:
         cache: gradle
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
-    - name: Setup Gradle Cache
-      uses: gradle/gradle-build-action@v2
+    - name: Setup Gradle
+      uses: gradle/actions/setup-gradle@v3
       with:
         gradle-home-cache-cleanup: true
+        gradle-version: '8.11.1'
     - name: Build with Gradle
       run: ./gradlew build
     - name: Build prodRelease
