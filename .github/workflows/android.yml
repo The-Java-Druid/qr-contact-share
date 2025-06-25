@@ -1,71 +1,28 @@
-name: Android CI
-
+name: Build app
 on:
   push:
     branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
   workflow_dispatch:
-  release:
-    types: [published]
-
 jobs:
   build:
-    name: Job 1 - Build Signed AAB
+    name: Build app
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - name: set up JDK
-      uses: actions/setup-java@v4
-      with:
-        java-version: '17'
-        distribution: 'temurin'
-        cache: gradle
-    - name: Grant execute permission for gradlew
-      run: chmod +x gradlew
-    - name: Setup Gradle
-      uses: gradle/actions/setup-gradle@v4
-      with:
-        cache-cleanup: always
-        #gradle-version: '8.11.1'
-    - name: Build with Gradle
-      run: ./gradlew build
-    - name: Build prodRelease
-      run: ./gradlew bundleRelease
-      continue-on-error: false  # Fail if build fails
-    - name: Sign AAb
-      id: sign
-      uses: r0adkll/sign-android-release@v1
-      with:
-        releaseDirectory: app/build/outputs/bundle/release
-        signingKeyBase64: ${{ secrets.KEYSTORE }}
-        alias: ${{ secrets.SIGNING_KEY_ALIAS }}
-        keyStorePassword: ${{ secrets.SIGNING_STORE_PASSWORD }}
-        keyPassword: ${{ secrets.SIGNING_KEY_PASSWORD }}
-    - name: Upload app bundle as artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: app-bundle
-        path: app/build/outputs/bundle/release/app-release.aab
-        retention-days: 2
-      continue-on-error: false  # Fail if upload fails
-    - run: echo Build status report=${{ job.status }}
-  deploy:
-    name: Job 2 - Deploy aab to playstore
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-    - name: Download app bundle from artifact
-      uses: actions/download-artifact@v4
-      with:
-        name: app-bundle
-    - name: Publish to Play Store
-    # wait until the application is published and the Google JSON is ready
-      if: false
-      uses: r0adkll/upload-google-play@v1
-      with:
-         serviceAccountJsonPlainText: ${{ secrets.SERVICE_ACCOUNT_JSON }}
-         packageName: com.uxstate.countriespad
-         releaseFiles: ${{ github.workspace }}/app-release.aab
-         track: production
-         continue-on-error: false  # Fail if deployment fails
+      - uses: actions/checkout@v4
+      - name: set up JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: gradle
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          cache-cleanup: always
+      - name: Build with Gradle
+        run: ./gradlew build
+      - run: echo Build status report=${{ job.status }}

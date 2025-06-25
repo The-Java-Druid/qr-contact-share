@@ -16,12 +16,7 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 
-import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-
-import static java.util.stream.Collectors.joining;
 
 public class ShareToQRActivity extends AppCompatActivity {
 
@@ -41,7 +36,7 @@ public class ShareToQRActivity extends AppCompatActivity {
             final Uri vcardUri = intent.getParcelableExtra(Intent.EXTRA_STREAM);
             if (vcardUri != null) {
                 try (final InputStream inputStream = getContentResolver().openInputStream(vcardUri)){
-                    generateQRCode(readStreamToString(inputStream));
+                    generateQRCode(new VCardParser(inputStream));
                 } catch (Exception e) {
                     e.printStackTrace();
                     Toast.makeText(this, "Failed to read contact", Toast.LENGTH_SHORT).show();
@@ -62,16 +57,10 @@ public class ShareToQRActivity extends AppCompatActivity {
         restoreScreenBrightness();
     }
 
-    private static String readStreamToString(InputStream is) throws IOException {
-        try(final BufferedReader reader = new BufferedReader(new InputStreamReader(is))){
-            return reader.lines().collect(joining(System.lineSeparator()));
-        }
-    }
-
-    private void generateQRCode(String text) {
+    private void generateQRCode(VCardParser parser) {
         final QRCodeWriter writer = new QRCodeWriter();
         try {
-            final Bitmap bitmap = toBitmap(writer.encode(text, BarcodeFormat.QR_CODE, 800, 800));
+            final Bitmap bitmap = toBitmap(writer.encode(parser.getText(), BarcodeFormat.QR_CODE, 800, 800));
             qrImageView.setImageBitmap(bitmap);
         } catch (WriterException e) {
             e.printStackTrace();
