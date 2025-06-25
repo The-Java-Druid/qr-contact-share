@@ -1,5 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
+    // use JUnit5 for tests
+    id("de.mannodermaus.android-junit5") version '1.13.0.0'
 }
 
 android {
@@ -10,8 +12,8 @@ android {
         applicationId "com.qrcontactshare"
         minSdk 28
         targetSdk 35
-        versionCode 1
-        versionName "1.0"
+        versionCode = providers.gradleProperty("version").getOrElse(1)
+        versionName = "1.0." + providers.gradleProperty("version").getOrElse("1")
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -34,7 +36,10 @@ dependencies {
     implementation libs.material
     implementation libs.core
     implementation libs.appcompat.v171
-    testImplementation libs.junit
-    androidTestImplementation libs.ext.junit
+    testImplementation platform(libs.junit.bom)
+    testImplementation libs.junit.jupiter
+    testRuntimeOnly libs.platform.junit.platform.launcher
+    testRuntimeOnly libs.jupiter.junit.jupiter.engine
+    testRuntimeOnly libs.vintage.junit.vintage.engine
     androidTestImplementation libs.espresso.core
 }
