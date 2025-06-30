@@ -9,6 +9,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.zxing.BarcodeFormat;
@@ -27,6 +28,8 @@ public class ShareToQRActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Enable edge-to-edge layout for Android 15+
+        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_share_to_qr);
 
         qrImageView = findViewById(R.id.qrImageView);
