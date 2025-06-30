@@ -35,7 +35,7 @@ dependencies {
     implementation libs.appcompat
     implementation libs.material
     implementation libs.core
-    implementation libs.appcompat.v171
+    implementation libs.androidx.activity
     testImplementation platform(libs.junit.bom)
     testImplementation libs.junit.jupiter
     testRuntimeOnly libs.platform.junit.platform.launcher

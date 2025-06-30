@@ -1,28 +1,19 @@
 [versions]
+activity = "1.10.1"
 agp = "8.11.0"
-appcompatVersion = "1.7.1"
 core = "3.5.3"
-junit = "4.13.2"
-junitBom = "5.13.1"
-junitPlatformLauncher = "1.0.0"
-junitVersion = "1.2.1"
+junitBom = "5.13.2"
 espressoCore = "3.6.1"
 appcompat = "1.7.1"
-junitVintageEngine = "4.12.0"
 material = "1.12.0"
-junitJupiter = "5.8.1"
+junitJupiter = "5.13.2"
 
 [libraries]
-appcompat-v171 = { module = "androidx.appcompat:appcompat", version.ref = "appcompatVersion" }
+androidx-activity = { module = "androidx.activity:activity", version.ref = "activity" }
 core = { module = "com.google.zxing:core", version.ref = "core" }
-junit = { group = "junit", name = "junit", version.ref = "junit" }
-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 junit-bom = { module = "org.junit:junit-bom", version.ref = "junitBom" }
-junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junitJupiter" }
-junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher", version.ref = "junitPlatformLauncher" }
-junit-vintage-engine = { module = "org.junit.vintage:junit-vintage-engine", version.ref = "junitVintageEngine" }
 jupiter-junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 junit-jupiter = { group = "org.junit.jupiter", name = "junit-jupiter", version.ref = "junitJupiter" }
