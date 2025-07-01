@@ -52,6 +52,10 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         name: app-bundle
+    - name: Create whatsnew directory
+      run: mkdir whatsnew
+    - name: Get Release Notes and Save to whatsnew-en-US
+      run: echo ${{ github.event.release.body }} > whatsnew/whatsnew-en-US
     - name: Publish to Play Store
       uses: r0adkll/upload-google-play@v1
       with:
@@ -59,4 +63,6 @@ jobs:
          packageName: com.qrcontactshare
          releaseFiles: ${{ github.workspace }}/app-release.aab
          track: production
-         continue-on-error: false  # Fail if deployment fails
+         releaseName: ${{ github.event.release.name }}
+         whatsNewDirectory: whatsnew
+      continue-on-error: false  # Fail if deployment fails
