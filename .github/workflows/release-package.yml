@@ -53,8 +53,6 @@ jobs:
       with:
         name: app-bundle
     - name: Publish to Play Store
-    # wait until the application is published and the Google JSON is ready
-      if: false
       uses: r0adkll/upload-google-play@v1
       with:
          serviceAccountJsonPlainText: ${{ secrets.SERVICE_ACCOUNT_JSON }}
