@@ -1,7 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     // use JUnit5 for tests
-    id("de.mannodermaus.android-junit5") version '1.13.0.0'
+    id("de.mannodermaus.android-junit5") version '1.13.1.0'
 }
 
 android {
@@ -13,7 +13,8 @@ android {
         minSdk 28
         targetSdk 35
         versionCode = providers.gradleProperty("version").getOrElse(1)
-        versionName = "1.0." + providers.gradleProperty("version").getOrElse("1")
+        versionName = providers.gradleProperty("releaseName").getOrElse("Bellenos") +
+                " (1.0." + providers.gradleProperty("version").getOrElse("1") + ")"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
