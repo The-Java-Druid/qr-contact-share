@@ -20,5 +20,8 @@
                 <data android:mimeType="text/x-vcard" />
             </intent-filter>
         </activity>
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-5391740461770424~8269789488"/>
     </application>
 </manifest>

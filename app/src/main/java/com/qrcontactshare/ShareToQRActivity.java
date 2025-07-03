@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -12,6 +13,10 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
@@ -22,7 +27,8 @@ import java.io.InputStream;
 public class ShareToQRActivity extends AppCompatActivity {
 
     private static final float DEFAULT_BRIGHTNESS = -1f;
-    private ImageView qrImageView;
+    private static final String TAG = "ShareToQRActivity";
+    private static final QRCodeWriter qrCodeWriter = new QRCodeWriter();
     private float originalBrightness = DEFAULT_BRIGHTNESS;
 
     @Override
@@ -30,18 +36,17 @@ public class ShareToQRActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         // Enable edge-to-edge layout for Android 15+
         EdgeToEdge.enable(this);
+        new Thread(this::initializeAds).start();
         setContentView(R.layout.activity_share_to_qr);
-
-        qrImageView = findViewById(R.id.qrImageView);
-
+        final ImageView qrImageView = findViewById(R.id.qrImageView);
         final Intent intent = getIntent();
         if (Intent.ACTION_SEND.equals(intent.getAction()) && "text/x-vcard".equals(intent.getType())) {
             final Uri vcardUri = intent.getParcelableExtra(Intent.EXTRA_STREAM);
             if (vcardUri != null) {
                 try (final InputStream inputStream = getContentResolver().openInputStream(vcardUri)){
-                    generateQRCode(new VCardParser(inputStream));
+                    qrImageView.setImageBitmap(generateQRCode(new VCardParser(inputStream)));
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    Log.e(TAG, "Failed to read contact", e);
                     Toast.makeText(this, "Failed to read contact", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -60,14 +65,12 @@ public class ShareToQRActivity extends AppCompatActivity {
         restoreScreenBrightness();
     }
 
-    private void generateQRCode(VCardParser parser) {
-        final QRCodeWriter writer = new QRCodeWriter();
+    private static Bitmap generateQRCode(VCardParser parser) {
         try {
-            final Bitmap bitmap = toBitmap(writer.encode(parser.getText(), BarcodeFormat.QR_CODE, 800, 800));
-            qrImageView.setImageBitmap(bitmap);
+            return toBitmap(qrCodeWriter.encode(parser.getText(), BarcodeFormat.QR_CODE, 800, 800));
         } catch (WriterException e) {
-            e.printStackTrace();
-            Toast.makeText(this, "QR generation failed", Toast.LENGTH_SHORT).show();
+            Log.e(TAG, "Failed to generate QR code", e);
+            throw new RuntimeException(e);
         }
     }
 
@@ -97,4 +100,19 @@ public class ShareToQRActivity extends AppCompatActivity {
             window.setAttributes(layoutParams);
         }
     }
+
+    private void initializeAds() {
+        MobileAds.initialize(this, ShareToQRActivity::onAddInitialized);
+        runOnUiThread(this::loadAdd);
+    }
+
+    private void loadAdd() {
+        ((AdView)findViewById(R.id.adView))
+                .loadAd(new AdRequest.Builder().build());
+    }
+
+    private static void onAddInitialized(InitializationStatus initializationStatus) {
+        Log.i(TAG, "Initialized ad manager with status: " + initializationStatus.getAdapterStatusMap());
+    }
+
 }

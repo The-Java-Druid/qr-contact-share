@@ -7,6 +7,7 @@ espressoCore = "3.6.1"
 appcompat = "1.7.1"
 material = "1.12.0"
 junitJupiter = "5.13.2"
+playServicesAds = "24.4.0"
 
 [libraries]
 androidx-activity = { module = "androidx.activity:activity", version.ref = "activity" }
@@ -18,6 +19,7 @@ jupiter-junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engin
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 junit-jupiter = { group = "org.junit.jupiter", name = "junit-jupiter", version.ref = "junitJupiter" }
 platform-junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher" }
+play-services-ads = { module = "com.google.android.gms:play-services-ads", version.ref = "playServicesAds" }
 vintage-junit-vintage-engine = { module = "org.junit.vintage:junit-vintage-engine" }
 
 [plugins]
