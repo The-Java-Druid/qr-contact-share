@@ -14,7 +14,7 @@ android {
         targetSdk 36
         versionCode = providers.gradleProperty("version").getOrElse(1)
         versionName = providers.gradleProperty("releaseName").getOrElse("Bellenos") +
-                " (1.0." + providers.gradleProperty("version").getOrElse("1") + ")"
+                " (1.0." + versionCode + ")"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
