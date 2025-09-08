@@ -5,7 +5,7 @@ core = "3.5.3"
 junitBom = "5.13.4"
 espressoCore = "3.7.0"
 appcompat = "1.7.1"
-material = "1.12.0"
+material = "1.13.0"
 junitJupiter = "5.13.4"
 playServicesAds = "24.5.0"
 
