@@ -1,12 +1,12 @@
 plugins {
     alias(libs.plugins.android.application)
     // use JUnit5 for tests
-    id("de.mannodermaus.android-junit5") version '1.13.1.0'
+    id("de.mannodermaus.android-junit5") version '1.14.0.0'
 }
 
 android {
     namespace 'com.qrcontactshare'
-    compileSdk 36
+    compileSdk = 36
 
     defaultConfig {
         applicationId "com.qrcontactshare"
