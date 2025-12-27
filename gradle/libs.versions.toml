@@ -1,13 +1,13 @@
 [versions]
-activity = "1.11.0"
-agp = "8.13.1"
+activity = "1.12.2"
+agp = "8.13.2"
 core = "3.5.4"
 junitBom = "6.0.1"
 espressoCore = "3.7.0"
 appcompat = "1.7.1"
 material = "1.13.0"
 junitJupiter = "6.0.1"
-playServicesAds = "24.7.0"
+playServicesAds = "24.9.0"
 
 [libraries]
 androidx-activity = { module = "androidx.activity:activity", version.ref = "activity" }
