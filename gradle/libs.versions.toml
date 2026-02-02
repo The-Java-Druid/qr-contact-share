@@ -1,12 +1,11 @@
 [versions]
-activity = "1.12.2"
-agp = "8.13.2"
+activity = "1.12.3"
+agp = "9.0.0"
 core = "3.5.4"
-junitBom = "6.0.1"
+junit = "6.0.2"
 espressoCore = "3.7.0"
 appcompat = "1.7.1"
 material = "1.13.0"
-junitJupiter = "6.0.1"
 playServicesAds = "24.9.0"
 
 [libraries]
@@ -14,10 +13,10 @@ androidx-activity = { module = "androidx.activity:activity", version.ref = "acti
 core = { module = "com.google.zxing:core", version.ref = "core" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
-junit-bom = { module = "org.junit:junit-bom", version.ref = "junitBom" }
+junit-bom = { module = "org.junit:junit-bom", version.ref = "junit" }
 jupiter-junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
-junit-jupiter = { group = "org.junit.jupiter", name = "junit-jupiter", version.ref = "junitJupiter" }
+junit-jupiter = { group = "org.junit.jupiter", name = "junit-jupiter", version.ref = "junit" }
 platform-junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher" }
 play-services-ads = { module = "com.google.android.gms:play-services-ads", version.ref = "playServicesAds" }
 vintage-junit-vintage-engine = { module = "org.junit.vintage:junit-vintage-engine" }
