@@ -1,5 +1,5 @@
 [versions]
-activity = "1.12.3"
+activity = "1.12.4"
 agp = "9.0.0"
 core = "3.5.4"
 junit = "6.0.2"
