@@ -2,7 +2,7 @@
 activity = "1.12.3"
 agp = "9.0.0"
 core = "3.5.4"
-junit = "6.0.2"
+junit = "6.0.3"
 espressoCore = "3.7.0"
 appcompat = "1.7.1"
 material = "1.13.0"
