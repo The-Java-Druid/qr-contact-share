@@ -25,3 +25,4 @@ dependencyResolutionManagement {
 rootProject.name = "QR Contact Share"
 include ':app'
 include ':watch'
+include ':lib'
