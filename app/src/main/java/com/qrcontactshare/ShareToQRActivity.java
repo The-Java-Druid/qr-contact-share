@@ -41,7 +41,7 @@ public class ShareToQRActivity extends AppCompatActivity {
         final ImageView qrImageView = findViewById(R.id.qrImageView);
         final Intent intent = getIntent();
         if (Intent.ACTION_SEND.equals(intent.getAction()) && "text/x-vcard".equals(intent.getType())) {
-            final Uri vcardUri = intent.getParcelableExtra(Intent.EXTRA_STREAM);
+            final Uri vcardUri = intent.getParcelableExtra(Intent.EXTRA_STREAM, Uri.class);
             if (vcardUri != null) {
                 try (final InputStream inputStream = getContentResolver().openInputStream(vcardUri)){
                     qrImageView.setImageBitmap(generateQRCode(new VCardParser(inputStream)));
