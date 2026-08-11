@@ -6,12 +6,12 @@ plugins {
 
 android {
     namespace 'com.qrcontactshare'
-    compileSdk = 36
+    compileSdk = 37
 
     defaultConfig {
         applicationId "com.qrcontactshare"
         minSdk 28
-        targetSdk 36
+        targetSdk 37
         versionCode = providers.gradleProperty("version").getOrElse(1)
         versionName = providers.gradleProperty("releaseName").getOrElse("Bellenos") +
                 " (1.0." + versionCode + ")"
