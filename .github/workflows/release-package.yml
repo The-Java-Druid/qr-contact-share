@@ -70,6 +70,6 @@ jobs:
          serviceAccountJsonPlainText: ${{ secrets.SERVICE_ACCOUNT_JSON }}
          packageName: com.qrcontactshare
          releaseFiles: ${{ github.workspace }}/app-release.aab
-         track: production
+         tracks: production
          whatsNewDirectory: whatsnew
       continue-on-error: false  # Fail if deployment fails
