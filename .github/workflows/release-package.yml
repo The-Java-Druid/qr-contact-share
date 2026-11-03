@@ -55,7 +55,15 @@ jobs:
     - name: Create whatsnew directory
       run: mkdir -p whatsnew
     - name: Get Release Notes and Save to whatsnew-en-US
-      run: echo "${{ github.event.release.body }}" > whatsnew/whatsnew-en-US
+      env:
+        RELEASE_BODY: ${{ github.event.release.body }}
+      run: |
+        mkdir -p whatsnew
+        if [ ${#RELEASE_BODY} -gt 500 ]; then
+          echo "${RELEASE_BODY:0:497}..." > whatsnew/whatsnew-en-US
+        else
+          echo "$RELEASE_BODY" > whatsnew/whatsnew-en-US
+        fi
     - name: Publish to Play Store
       uses: r0adkll/upload-google-play@v1
       with:
